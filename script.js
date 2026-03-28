@@ -12,7 +12,7 @@ let form = document.getElementById("registrationForm");
 if (localStorage.getItem("username")) {
     console.log(localStorage.getItem("username"))
     username.value = localStorage.getItem("username")
-}
+} // fills username if there is one in localStorage
 
 username.addEventListener("blur", () => {
     if (username.validity.valid) {
@@ -47,13 +47,16 @@ confirmPassword.addEventListener("blur", () => {
         confirmPassword.validity.valid = false;
         confirmPasswordError.textContent = "Please make sure your passwords match"
     }
-})
+}) // Checks validity for inputs after clicking off them
+
+
+
+// rechecks errors on submit
 form.addEventListener("submit", (event) => {
     let error = false;
     event.preventDefault();
 
 
-console.log(username.validity)
 if (!username.validity.valid) {
 usernameError.textContent = "A username with 5 characters of more is required"
 error = true;
@@ -71,9 +74,12 @@ error = true;
         confirmPasswordError.textContent = "Please make sure your passwords match"
         error = true;
     }
+    // checks all inputs individually and sets an error message if needed
 
-    if (!error) {
-        alert("You have successfully registered")
+    if (error) {
+        form.querySelector("input:invalid").focus();
+    } else {
+          alert("You have successfully registered")
         localStorage.setItem("username", username.value)
-    }
+    } // if no errors, adds username  
 }) 
